@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>NEXORA — Student Grade & Score Calculator</title>
+  <meta name="description" content="Use NEXORA's free student grade and score calculator to calculate percentages and grades instantly.">
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: #0b0f14;
+      color: #ffffff;
+      min-height: 100vh;
+    }
+
+    header {
+      text-align: center;
+      padding: 35px 20px 20px;
+    }
+
+    header h1 {
+      font-size: 42px;
+      letter-spacing: 3px;
+    }
+
+    header p {
+      margin-top: 8px;
+      color: #aeb7c4;
+      font-size: 16px;
+    }
+
+    .container {
+      width: 92%;
+      max-width: 650px;
+      margin: 20px auto 50px;
+    }
+
+    .card {
+      background: #151b23;
+      border: 1px solid #26303d;
+      border-radius: 18px;
+      padding: 25px;
+      margin-bottom: 20px;
+    }
+
+    .card h2 {
+      font-size: 24px;
+      margin-bottom: 12px;
+    }
+
+    .instructions {
+      color: #b9c2ce;
+      line-height: 1.6;
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      margin: 16px 0 7px;
+      font-weight: bold;
+    }
+
+    input {
+      width: 100%;
+      padding: 14px;
+      border-radius: 10px;
+      border: 1px solid #394554;
+      background: #0d1218;
+      color: white;
+      font-size: 17px;
+      outline: none;
+    }
+
+    input:focus {
+      border-color: #6c8cff;
+    }
+
+    button {
+      width: 100%;
+      padding: 14px;
+      margin-top: 20px;
+      border: none;
+      border-radius: 10px;
+      background: #5d7cff;
+      color: white;
+      font-size: 17px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #4d6df0;
+    }
+
+    .reset {
+      background: #29313c;
+    }
+
+    .reset:hover {
+      background: #343e4b;
+    }
+
+    .results {
+      display: none;
+      margin-top: 25px;
+    }
+
+    .result-box {
+      background: #0d1218;
+      border: 1px solid #2b3542;
+      border-radius: 12px;
+      padding: 18px;
+      margin-top: 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .result-box span:last-child {
+      font-size: 22px;
+      font-weight: bold;
+    }
+
+    .grade {
+      font-size: 35px !important;
+    }
+
+    .tools {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+      margin-top: 18px;
+    }
+
+    .tool {
+      background: #0d1218;
+      border: 1px solid #2b3542;
+      border-radius: 12px;
+      padding: 16px;
+      text-align: center;
+      color: #cbd3df;
+    }
+
+    footer {
+      text-align: center;
+      color: #687383;
+      padding: 25px;
+      font-size: 14px;
+    }
+
+    @media (max-width: 500px) {
+      header h1 {
+        font-size: 34px;
+      }
+
+      .card {
+        padding: 20px;
+      }
+
+      .tools {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <h1>NEXORA</h1>
+    <p>Simple tools. Instant answers.</p>
+  </header>
+
+  <main class="container">
+
+    <section class="card">
+      <h2>Student Grade & Score Calculator</h2>
+
+      <p class="instructions">
+        Enter the score you obtained and the maximum possible score.
+        NEXORA will calculate your total, percentage and grade instantly.
+      </p>
+
+      <label for="score">Score obtained</label>
+      <input type="number" id="score" placeholder="e.g. 72">
+
+      <label for="maximum">Maximum score</label>
+      <input type="number" id="maximum" placeholder="e.g. 100">
+
+      <button onclick="calculate()">Calculate Results</button>
+      <button class="reset" onclick="resetCalculator()">Reset</button>
+
+      <div class="results" id="results">
+
+        <div class="result-box">
+          <span>Total</span>
+          <span id="total">—</span>
+        </div>
+
+        <div class="result-box">
+          <span>Percentage</span>
+          <span id="percentage">—</span>
+        </div>
+
+        <div class="result-box">
+          <span>Grade</span>
+          <span class="grade" id="grade">—</span>
+        </div>
+
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>More NEXORA Tools</h2>
+
+      <div class="tools">
+        <div class="tool">Percentage Calculator</div>
+        <div class="tool">Average Calculator</div>
+        <div class="tool">Profit Calculator</div>
+        <div class="tool">Discount Calculator</div>
+        <div class="tool">Unit Converter</div>
+        <div class="tool">More coming soon</div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    © 2026 NEXORA. Simple tools. Instant answers.
+  </footer>
+
+  <script>
+    function calculate() {
+      const score = Number(document.getElementById("score").value);
+      const maximum = Number(document.getElementById("maximum").value);
+
+      if (!Number.isFinite(score) || !Number.isFinite(maximum)) {
+        alert("Please enter both scores.");
+        return;
+      }
+
+      if (maximum <= 0) {
+        alert("Maximum score must be greater than 0.");
+        return;
+      }
+
+      if (score < 0 || score > maximum) {
+        alert("Score obtained must be between 0 and the maximum score.");
+        return;
+      }
+
+      const percentage = (score / maximum) * 100;
+
+      let grade;
+
+      if (percentage >= 75) {
+        grade = "A";
+      } else if (percentage >= 65) {
+        grade = "B";
+      } else if (percentage >= 55) {
+        grade = "C";
+      } else if (percentage >= 45) {
+        grade = "D";
+      } else if (percentage >= 40) {
+        grade = "E";
+      } else {
+        grade = "F";
+      }
+
+      document.getElementById("total").textContent =
+        score + " / " + maximum;
+
+      document.getElementById("percentage").textContent =
+        percentage.toFixed(2) + "%";
+
+      document.getElementById("grade").textContent = grade;
+
+      document.getElementById("results").style.display = "block";
+    }
+
+    function resetCalculator() {
+      document.getElementById("score").value = "";
+      document.getElementById("maximum").value = "";
+
+      document.getElementById("total").textContent = "—";
+      document.getElementById("percentage").textContent = "—";
+      document.getElementById("grade").textContent = "—";
+
+      document.getElementById("results").style.display = "none";
+    }
+  </script>
+
+</body>
+</html>
