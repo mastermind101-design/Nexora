@@ -1,483 +1,689 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="NEXON — simple online calculators for grades, percentages, averages, profit, discounts and unit conversions.">
+<title>NEXON — Simple Tools. Instant Answers.</title>
 
-  <title>EXORA — Simple Tools. Instant Answers.</title>
-  <meta name="description" content="EXORA provides simple online calculators and useful everyday tools with instant answers.">
+<style>
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
 
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+body {
+    font-family: Arial, sans-serif;
+    background: #05070b;
+    color: #ffffff;
+    min-height: 100vh;
+}
 
-    body {
-      font-family: Arial, sans-serif;
-      background:
-        radial-gradient(circle at 50% 0%, rgba(91, 108, 255, 0.16), transparent 32%),
-        #080b10;
-      color: #ffffff;
-      min-height: 100vh;
-    }
+header {
+    text-align: center;
+    padding: 40px 20px 25px;
+}
 
-    /* ===== BRAND ===== */
+.logo {
+    font-size: 48px;
+    font-weight: 800;
+    letter-spacing: 4px;
+    color: #ffffff;
+    text-shadow:
+        0 0 8px #00d9ff,
+        0 0 20px #00d9ff,
+        0 0 40px rgba(0, 217, 255, 0.5);
+}
 
-    header {
-      text-align: center;
-      padding: 42px 20px 25px;
-    }
+.tagline {
+    margin-top: 8px;
+    color: #9da8b8;
+    font-size: 15px;
+}
 
-    .logo {
-      position: relative;
-      display: inline-block;
-      font-size: 46px;
-      font-weight: 900;
-      letter-spacing: 7px;
-      color: #ffffff;
-      text-shadow:
-        0 0 12px rgba(115, 135, 255, 0.8),
-        0 0 30px rgba(91, 108, 255, 0.35);
-    }
+.container {
+    width: 92%;
+    max-width: 900px;
+    margin: auto;
+    padding-bottom: 50px;
+}
 
-    .logo::before {
-      content: "";
-      position: absolute;
-      left: 50%;
-      top: 50%;
-      width: 150px;
-      height: 70px;
-      transform: translate(-50%, -50%);
-      background: rgba(82, 103, 255, 0.16);
-      filter: blur(25px);
-      border-radius: 50%;
-      z-index: -1;
-    }
+.calculator {
+    background: #0c1119;
+    border: 1px solid #1b2735;
+    border-radius: 18px;
+    padding: 24px;
+    margin: 20px 0;
+}
 
-    .tagline {
-      margin-top: 10px;
-      color: #aeb8c8;
-      font-size: 15px;
-      letter-spacing: 1px;
-    }
+.calculator h2 {
+    margin-bottom: 18px;
+    font-size: 22px;
+}
 
-    /* ===== MAIN ===== */
+.calculator p {
+    color: #9da8b8;
+    margin-bottom: 15px;
+}
 
-    .container {
-      width: 92%;
-      max-width: 680px;
-      margin: 15px auto 50px;
-    }
+input,
+select {
+    width: 100%;
+    padding: 14px;
+    margin: 7px 0;
+    border: 1px solid #273444;
+    border-radius: 10px;
+    background: #070a10;
+    color: white;
+    font-size: 16px;
+}
 
-    .card {
-      background: rgba(19, 24, 33, 0.96);
-      border: 1px solid #293343;
-      border-radius: 18px;
-      padding: 25px;
-      margin-bottom: 20px;
-    }
+button {
+    width: 100%;
+    padding: 14px;
+    margin-top: 10px;
+    border: none;
+    border-radius: 10px;
+    background: #00c8ef;
+    color: #001018;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+}
 
-    .card h2 {
-      font-size: 23px;
-      margin-bottom: 10px;
-    }
+button:hover {
+    background: #20d9ff;
+}
 
-    .description {
-      color: #aeb8c8;
-      line-height: 1.6;
-      margin-bottom: 20px;
-    }
+.reset {
+    background: #202a36;
+    color: white;
+}
 
-    label {
-      display: block;
-      margin: 16px 0 7px;
-      font-weight: bold;
-    }
+.result {
+    margin-top: 16px;
+    padding: 15px;
+    border-radius: 10px;
+    background: #080d14;
+    border: 1px solid #1b2735;
+    line-height: 1.8;
+}
 
-    input {
-      width: 100%;
-      padding: 14px;
-      border-radius: 10px;
-      border: 1px solid #3a4657;
-      background: #0b1017;
-      color: #ffffff;
-      font-size: 16px;
-      outline: none;
-    }
+.error {
+    color: #ff7b7b;
+}
 
-    input:focus {
-      border-color: #7185ff;
-      box-shadow: 0 0 0 2px rgba(113, 133, 255, 0.12);
-    }
-
-    button {
-      width: 100%;
-      padding: 14px;
-      margin-top: 18px;
-      border: none;
-      border-radius: 10px;
-      background: #6178ff;
-      color: white;
-      font-size: 16px;
-      font-weight: bold;
-      cursor: pointer;
-    }
-
-    button:hover {
-      background: #5068f0;
-    }
-
-    .reset {
-      background: #29323e;
-    }
-
-    .reset:hover {
-      background: #35404e;
-    }
-
-    .results {
-      display: none;
-      margin-top: 22px;
-    }
-
-    .result-box {
-      background: #0b1017;
-      border: 1px solid #293343;
-      border-radius: 11px;
-      padding: 16px;
-      margin-top: 10px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 15px;
-    }
-
-    .result-value {
-      font-size: 21px;
-      font-weight: bold;
-    }
-
-    .grade {
-      font-size: 30px;
-    }
-
-    /* ===== TOOL LIST ===== */
-
-    .tools {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 12px;
-      margin-top: 18px;
-    }
-
-    .tool {
-      background: #0b1017;
-      border: 1px solid #293343;
-      border-radius: 12px;
-      padding: 16px;
-      color: #c7cfdb;
-      text-align: center;
-    }
-
-    .tool.active {
-      border-color: #536cff;
-      color: #ffffff;
-    }
-
-    .tool.soon {
-      opacity: 0.55;
-    }
-
-    .status {
-      display: block;
-      font-size: 11px;
-      margin-top: 7px;
-      color: #7f8b9d;
-    }
-
-    footer {
-      text-align: center;
-      color: #626d7c;
-      padding: 25px;
-      font-size: 13px;
-    }
-
-    @media (max-width: 500px) {
-      .logo {
-        font-size: 38px;
-        letter-spacing: 5px;
-      }
-
-      .card {
-        padding: 20px;
-      }
-
-      .tools {
-        grid-template-columns: 1fr;
-      }
-    }
-  </style>
+footer {
+    text-align: center;
+    padding: 25px;
+    color: #657184;
+    font-size: 13px;
+}
+</style>
 </head>
 
 <body>
 
-  <!-- BRAND -->
-  <header>
-    <div class="logo">EXORA</div>
-    <p class="tagline">Simple tools. Instant answers.</p>
-  </header>
+<header>
+    <div class="logo">NEXON</div>
+    <div class="tagline">Simple tools. Instant answers.</div>
+</header>
 
-  <main class="container">
+<div class="container">
 
     <!-- GRADE CALCULATOR -->
-    <section class="card">
-      <h2>Student Grade & Score Calculator</h2>
+    <section class="calculator">
+        <h2>Grade & Score Calculator</h2>
+        <p>Enter your score and maximum score.</p>
 
-      <p class="description">
-        Enter your score and the maximum possible score.
-        EXORA calculates your percentage and grade instantly.
-      </p>
+        <input type="number" id="score" placeholder="Score obtained">
+        <input type="number" id="maximum" placeholder="Maximum score">
 
-      <label for="score">Score obtained</label>
-      <input type="number" id="score" placeholder="e.g. 72">
+        <button onclick="calculateGrade()">Calculate Result</button>
+        <button class="reset" onclick="resetGrade()">Reset</button>
 
-      <label for="maximum">Maximum score</label>
-      <input type="number" id="maximum" placeholder="e.g. 100">
-
-      <button type="button" onclick="calculateGrade()">
-        Calculate Results
-      </button>
-
-      <button type="button" class="reset" onclick="resetGrade()">
-        Reset
-      </button>
-
-      <div class="results" id="gradeResults">
-
-        <div class="result-box">
-          <span>Total</span>
-          <span class="result-value" id="total">—</span>
+        <div class="result" id="gradeResult">
+            Result will appear here.
         </div>
-
-        <div class="result-box">
-          <span>Percentage</span>
-          <span class="result-value" id="gradePercentage">—</span>
-        </div>
-
-        <div class="result-box">
-          <span>Grade</span>
-          <span class="result-value grade" id="grade">—</span>
-        </div>
-
-      </div>
     </section>
 
 
     <!-- PERCENTAGE CALCULATOR -->
-    <section class="card">
-      <h2>Percentage Calculator</h2>
+    <section class="calculator">
+        <h2>Percentage Calculator</h2>
+        <p>Find what percentage one number is of another.</p>
 
-      <p class="description">
-        Find what percentage one number is of another number.
-      </p>
+        <input type="number" id="part" placeholder="Part">
+        <input type="number" id="total" placeholder="Total">
 
-      <label for="percentagePart">Number</label>
-      <input
-        type="number"
-        id="percentagePart"
-        placeholder="e.g. 25"
-      >
+        <button onclick="calculatePercentage()">Calculate Percentage</button>
+        <button class="reset" onclick="resetPercentage()">Reset</button>
 
-      <label for="percentageTotal">Total</label>
-      <input
-        type="number"
-        id="percentageTotal"
-        placeholder="e.g. 100"
-      >
-
-      <button type="button" onclick="calculatePercentage()">
-        Calculate Percentage
-      </button>
-
-      <button type="button" class="reset" onclick="resetPercentage()">
-        Reset
-      </button>
-
-      <div class="results" id="percentageResults">
-
-        <div class="result-box">
-          <span>Percentage</span>
-          <span class="result-value" id="percentageAnswer">—</span>
+        <div class="result" id="percentageResult">
+            Result will appear here.
         </div>
-
-      </div>
     </section>
 
 
-    <!-- OTHER TOOLS -->
-    <section class="card">
-      <h2>More EXORA Tools</h2>
+    <!-- AVERAGE CALCULATOR -->
+    <section class="calculator">
+        <h2>Average Calculator</h2>
+        <p>Enter numbers separated by commas.</p>
 
-      <div class="tools">
+        <input
+            type="text"
+            id="numbers"
+            placeholder="Example: 70, 85, 90, 75"
+        >
 
-        <div class="tool active">
-          Grade Calculator
-          <span class="status">Available</span>
+        <button onclick="calculateAverage()">Calculate Average</button>
+        <button class="reset" onclick="resetAverage()">Reset</button>
+
+        <div class="result" id="averageResult">
+            Result will appear here.
         </div>
-
-        <div class="tool active">
-          Percentage Calculator
-          <span class="status">Available</span>
-        </div>
-
-        <div class="tool soon">
-          Average Calculator
-          <span class="status">Coming soon</span>
-        </div>
-
-        <div class="tool soon">
-          Profit Calculator
-          <span class="status">Coming soon</span>
-        </div>
-
-        <div class="tool soon">
-          Discount Calculator
-          <span class="status">Coming soon</span>
-        </div>
-
-        <div class="tool soon">
-          Unit Converter
-          <span class="status">Coming soon</span>
-        </div>
-
-      </div>
     </section>
 
-  </main>
 
-  <footer>
-    © 2026 EXORA — Simple tools. Instant answers.
-  </footer>
+    <!-- PROFIT CALCULATOR -->
+    <section class="calculator">
+        <h2>Profit Calculator</h2>
+        <p>Enter the cost price and selling price.</p>
+
+        <input
+            type="number"
+            id="costPrice"
+            placeholder="Cost price"
+        >
+
+        <input
+            type="number"
+            id="sellingPrice"
+            placeholder="Selling price"
+        >
+
+        <button onclick="calculateProfit()">Calculate Profit</button>
+        <button class="reset" onclick="resetProfit()">Reset</button>
+
+        <div class="result" id="profitResult">
+            Result will appear here.
+        </div>
+    </section>
 
 
-  <script>
+    <!-- DISCOUNT CALCULATOR -->
+    <section class="calculator">
+        <h2>Discount Calculator</h2>
+        <p>Find the discount amount and final price.</p>
 
-    /* ===== GRADE CALCULATOR ===== */
+        <input
+            type="number"
+            id="originalPrice"
+            placeholder="Original price"
+        >
 
-    function calculateGrade() {
+        <input
+            type="number"
+            id="discountPercent"
+            placeholder="Discount percentage"
+        >
 
-      const score =
-        Number(document.getElementById("score").value);
+        <button onclick="calculateDiscount()">Calculate Discount</button>
+        <button class="reset" onclick="resetDiscount()">Reset</button>
 
-      const maximum =
-        Number(document.getElementById("maximum").value);
+        <div class="result" id="discountResult">
+            Result will appear here.
+        </div>
+    </section>
 
-      if (!Number.isFinite(score) || !Number.isFinite(maximum)) {
-        alert("Please enter both scores.");
+
+    <!-- UNIT CONVERTER -->
+    <section class="calculator">
+        <h2>Unit Converter</h2>
+        <p>Convert common units of length, weight and temperature.</p>
+
+        <select id="conversionType" onchange="updateUnits()">
+            <option value="length">Length</option>
+            <option value="weight">Weight</option>
+            <option value="temperature">Temperature</option>
+        </select>
+
+        <input
+            type="number"
+            id="conversionValue"
+            placeholder="Enter value"
+        >
+
+        <select id="fromUnit"></select>
+
+        <select id="toUnit"></select>
+
+        <button onclick="convertUnit()">Convert</button>
+        <button class="reset" onclick="resetConverter()">Reset</button>
+
+        <div class="result" id="conversionResult">
+            Result will appear here.
+        </div>
+    </section>
+
+</div>
+
+<footer>
+    © 2026 NEXON — Simple tools. Instant answers.
+</footer>
+
+
+<script>
+
+function calculateGrade() {
+
+    const score = Number(document.getElementById("score").value);
+    const maximum = Number(document.getElementById("maximum").value);
+    const result = document.getElementById("gradeResult");
+
+    if (
+        !Number.isFinite(score) ||
+        !Number.isFinite(maximum) ||
+        maximum <= 0 ||
+        score < 0 ||
+        score > maximum
+    ) {
+        result.innerHTML =
+            '<span class="error">Please enter a valid score and maximum score.</span>';
         return;
-      }
+    }
 
-      if (maximum <= 0) {
-        alert("Maximum score must be greater than 0.");
-        return;
-      }
+    const percentage = (score / maximum) * 100;
 
-      if (score < 0 || score > maximum) {
-        alert("Score obtained must be between 0 and the maximum score.");
-        return;
-      }
+    let grade;
 
-      const percentage = (score / maximum) * 100;
-
-      let grade;
-
-      if (percentage >= 75) {
+    if (percentage >= 75) {
         grade = "A";
-      } else if (percentage >= 65) {
+    } else if (percentage >= 65) {
         grade = "B";
-      } else if (percentage >= 55) {
+    } else if (percentage >= 55) {
         grade = "C";
-      } else if (percentage >= 45) {
+    } else if (percentage >= 45) {
         grade = "D";
-      } else if (percentage >= 40) {
+    } else if (percentage >= 40) {
         grade = "E";
-      } else {
+    } else {
         grade = "F";
-      }
-
-      document.getElementById("total").textContent =
-        score + " / " + maximum;
-
-      document.getElementById("gradePercentage").textContent =
-        percentage.toFixed(2) + "%";
-
-      document.getElementById("grade").textContent =
-        grade;
-
-      document.getElementById("gradeResults").style.display =
-        "block";
     }
 
-
-    function resetGrade() {
-
-      document.getElementById("score").value = "";
-      document.getElementById("maximum").value = "";
-
-      document.getElementById("total").textContent = "—";
-      document.getElementById("gradePercentage").textContent = "—";
-      document.getElementById("grade").textContent = "—";
-
-      document.getElementById("gradeResults").style.display =
-        "none";
-    }
+    result.innerHTML =
+        "Total: " + score + " / " + maximum +
+        "<br>Percentage: " + percentage.toFixed(2) + "%" +
+        "<br>Grade: <strong>" + grade + "</strong>";
+}
 
 
-    /* ===== PERCENTAGE CALCULATOR ===== */
+function resetGrade() {
+    document.getElementById("score").value = "";
+    document.getElementById("maximum").value = "";
+    document.getElementById("gradeResult").innerHTML =
+        "Result will appear here.";
+}
 
-    function calculatePercentage() {
 
-      const part =
-        Number(document.getElementById("percentagePart").value);
+function calculatePercentage() {
 
-      const total =
-        Number(document.getElementById("percentageTotal").value);
+    const part = Number(document.getElementById("part").value);
+    const total = Number(document.getElementById("total").value);
+    const result = document.getElementById("percentageResult");
 
-      if (!Number.isFinite(part) || !Number.isFinite(total)) {
-        alert("Please enter both numbers.");
+    if (
+        !Number.isFinite(part) ||
+        !Number.isFinite(total) ||
+        total === 0
+    ) {
+        result.innerHTML =
+            '<span class="error">Please enter valid numbers.</span>';
         return;
-      }
+    }
 
-      if (total === 0) {
-        alert("The total cannot be zero.");
+    const percentage = (part / total) * 100;
+
+    result.innerHTML =
+        "Percentage: <strong>" +
+        percentage.toFixed(2) +
+        "%</strong>";
+}
+
+
+function resetPercentage() {
+    document.getElementById("part").value = "";
+    document.getElementById("total").value = "";
+    document.getElementById("percentageResult").innerHTML =
+        "Result will appear here.";
+}
+
+
+function calculateAverage() {
+
+    const input = document.getElementById("numbers").value.trim();
+    const result = document.getElementById("averageResult");
+
+    if (!input) {
+        result.innerHTML =
+            '<span class="error">Please enter some numbers.</span>';
         return;
-      }
-
-      const answer = (part / total) * 100;
-
-      document.getElementById("percentageAnswer").textContent =
-        answer.toFixed(2) + "%";
-
-      document.getElementById("percentageResults").style.display =
-        "block";
     }
 
+    const numbers = input
+        .split(",")
+        .map(value => Number(value.trim()));
 
-    function resetPercentage() {
-
-      document.getElementById("percentagePart").value = "";
-      document.getElementById("percentageTotal").value = "";
-
-      document.getElementById("percentageAnswer").textContent =
-        "—";
-
-      document.getElementById("percentageResults").style.display =
-        "none";
+    if (
+        numbers.length === 0 ||
+        numbers.some(number => !Number.isFinite(number))
+    ) {
+        result.innerHTML =
+            '<span class="error">Use numbers separated by commas.</span>';
+        return;
     }
 
-  </script>
+    const sum = numbers.reduce(
+        (total, number) => total + number,
+        0
+    );
+
+    const average = sum / numbers.length;
+
+    result.innerHTML =
+        "Number of values: " + numbers.length +
+        "<br>Total: " + sum +
+        "<br>Average: <strong>" +
+        average.toFixed(2) +
+        "</strong>";
+}
+
+
+function resetAverage() {
+    document.getElementById("numbers").value = "";
+    document.getElementById("averageResult").innerHTML =
+        "Result will appear here.";
+}
+
+
+function calculateProfit() {
+
+    const cost = Number(document.getElementById("costPrice").value);
+    const selling = Number(document.getElementById("sellingPrice").value);
+    const result = document.getElementById("profitResult");
+
+    if (
+        !Number.isFinite(cost) ||
+        !Number.isFinite(selling) ||
+        cost < 0 ||
+        selling < 0
+    ) {
+        result.innerHTML =
+            '<span class="error">Please enter valid prices.</span>';
+        return;
+    }
+
+    const profit = selling - cost;
+
+    const profitPercentage =
+        cost === 0 ? 0 : (profit / cost) * 100;
+
+    if (profit > 0) {
+
+        result.innerHTML =
+            "Profit: <strong>" +
+            profit.toFixed(2) +
+            "</strong>" +
+            "<br>Profit percentage: " +
+            profitPercentage.toFixed(2) +
+            "%";
+
+    } else if (profit < 0) {
+
+        result.innerHTML =
+            "Loss: <strong>" +
+            Math.abs(profit).toFixed(2) +
+            "</strong>" +
+            "<br>Loss percentage: " +
+            Math.abs(profitPercentage).toFixed(2) +
+            "%";
+
+    } else {
+
+        result.innerHTML =
+            "No profit and no loss.";
+    }
+}
+
+
+function resetProfit() {
+    document.getElementById("costPrice").value = "";
+    document.getElementById("sellingPrice").value = "";
+    document.getElementById("profitResult").innerHTML =
+        "Result will appear here.";
+}
+
+
+function calculateDiscount() {
+
+    const original = Number(
+        document.getElementById("originalPrice").value
+    );
+
+    const discount = Number(
+        document.getElementById("discountPercent").value
+    );
+
+    const result = document.getElementById("discountResult");
+
+    if (
+        !Number.isFinite(original) ||
+        !Number.isFinite(discount) ||
+        original < 0 ||
+        discount < 0 ||
+        discount > 100
+    ) {
+        result.innerHTML =
+            '<span class="error">Enter a price and a discount from 0% to 100%.</span>';
+        return;
+    }
+
+    const discountAmount =
+        original * (discount / 100);
+
+    const finalPrice =
+        original - discountAmount;
+
+    result.innerHTML =
+        "Discount amount: <strong>" +
+        discountAmount.toFixed(2) +
+        "</strong>" +
+        "<br>Final price: <strong>" +
+        finalPrice.toFixed(2) +
+        "</strong>";
+}
+
+
+function resetDiscount() {
+    document.getElementById("originalPrice").value = "";
+    document.getElementById("discountPercent").value = "";
+    document.getElementById("discountResult").innerHTML =
+        "Result will appear here.";
+}
+
+
+const units = {
+
+    length: {
+        names: ["Meters", "Kilometers", "Centimeters", "Millimeters", "Miles", "Feet"],
+        toBase: {
+            Meters: 1,
+            Kilometers: 1000,
+            Centimeters: 0.01,
+            Millimeters: 0.001,
+            Miles: 1609.344,
+            Feet: 0.3048
+        }
+    },
+
+    weight: {
+        names: ["Kilograms", "Grams", "Milligrams", "Pounds", "Ounces"],
+        toBase: {
+            Kilograms: 1,
+            Grams: 0.001,
+            Milligrams: 0.000001,
+            Pounds: 0.45359237,
+            Ounces: 0.028349523125
+        }
+    },
+
+    temperature: {
+        names: ["Celsius", "Fahrenheit", "Kelvin"]
+    }
+};
+
+
+function updateUnits() {
+
+    const type =
+        document.getElementById("conversionType").value;
+
+    const from =
+        document.getElementById("fromUnit");
+
+    const to =
+        document.getElementById("toUnit");
+
+    from.innerHTML = "";
+    to.innerHTML = "";
+
+    units[type].names.forEach(unit => {
+
+        const option1 =
+            document.createElement("option");
+
+        option1.value = unit;
+        option1.textContent = unit;
+
+        const option2 =
+            document.createElement("option");
+
+        option2.value = unit;
+        option2.textContent = unit;
+
+        from.appendChild(option1);
+        to.appendChild(option2);
+    });
+
+    if (type === "length") {
+        to.selectedIndex = 1;
+    }
+
+    if (type === "weight") {
+        to.selectedIndex = 1;
+    }
+
+    if (type === "temperature") {
+        to.selectedIndex = 1;
+    }
+}
+
+
+function convertUnit() {
+
+    const type =
+        document.getElementById("conversionType").value;
+
+    const value =
+        Number(document.getElementById("conversionValue").value);
+
+    const from =
+        document.getElementById("fromUnit").value;
+
+    const to =
+        document.getElementById("toUnit").value;
+
+    const result =
+        document.getElementById("conversionResult");
+
+    if (!Number.isFinite(value)) {
+
+        result.innerHTML =
+            '<span class="error">Please enter a valid number.</span>';
+
+        return;
+    }
+
+    let converted;
+
+    if (type === "temperature") {
+
+        if (from === to) {
+            converted = value;
+        }
+
+        else if (from === "Celsius" && to === "Fahrenheit") {
+            converted = (value * 9 / 5) + 32;
+        }
+
+        else if (from === "Fahrenheit" && to === "Celsius") {
+            converted = (value - 32) * 5 / 9;
+        }
+
+        else if (from === "Celsius" && to === "Kelvin") {
+            converted = value + 273.15;
+        }
+
+        else if (from === "Kelvin" && to === "Celsius") {
+            converted = value - 273.15;
+        }
+
+        else if (from === "Fahrenheit" && to === "Kelvin") {
+            converted = (value - 32) * 5 / 9 + 273.15;
+        }
+
+        else if (from === "Kelvin" && to === "Fahrenheit") {
+            converted = (value - 273.15) * 9 / 5 + 32;
+        }
+
+    } else {
+
+        const baseValue =
+            value * units[type].toBase[from];
+
+        converted =
+            baseValue / units[type].toBase[to];
+    }
+
+    result.innerHTML =
+        "<strong>" +
+        value +
+        " " +
+        from +
+        " = " +
+        converted.toFixed(4) +
+        " " +
+        to +
+        "</strong>";
+}
+
+
+function resetConverter() {
+
+    document.getElementById("conversionValue").value = "";
+
+    document.getElementById("conversionResult").innerHTML =
+        "Result will appear here.";
+
+    updateUnits();
+}
+
+
+/* Load converter options immediately */
+updateUnits();
+
+</script>
 
 </body>
 </html>
