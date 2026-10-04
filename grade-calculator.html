@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Grade Calculator – NEXON</title>
+  <meta name="description" content="Calculate your score, percentage and grade instantly with the NEXON Grade Calculator.">
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: #0b0b0f;
+      color: #ffffff;
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: auto;
+    }
+
+    .brand {
+      text-align: center;
+      margin: 20px 0 30px;
+    }
+
+    .brand h1 {
+      font-size: 42px;
+      letter-spacing: 2px;
+    }
+
+    .brand p {
+      color: #aaa;
+      margin-top: 8px;
+    }
+
+    .card {
+      background: #15151c;
+      border: 1px solid #292934;
+      border-radius: 18px;
+      padding: 25px;
+    }
+
+    h2 {
+      margin-bottom: 8px;
+    }
+
+    .description {
+      color: #aaa;
+      margin-bottom: 25px;
+      line-height: 1.5;
+    }
+
+    label {
+      display: block;
+      margin: 15px 0 7px;
+      color: #ddd;
+    }
+
+    input {
+      width: 100%;
+      padding: 14px;
+      border-radius: 10px;
+      border: 1px solid #383844;
+      background: #0e0e13;
+      color: white;
+      font-size: 16px;
+    }
+
+    button {
+      width: 100%;
+      padding: 14px;
+      margin-top: 18px;
+      border: none;
+      border-radius: 10px;
+      background: #ffffff;
+      color: #111;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    button:hover {
+      opacity: 0.9;
+    }
+
+    .reset {
+      background: #292934;
+      color: white;
+    }
+
+    .result {
+      display: none;
+      margin-top: 25px;
+      padding: 20px;
+      background: #0e0e13;
+      border-radius: 12px;
+      border: 1px solid #292934;
+    }
+
+    .result p {
+      margin: 10px 0;
+      font-size: 17px;
+    }
+
+    .grade {
+      font-size: 30px;
+      font-weight: bold;
+      margin-top: 12px;
+    }
+
+    .back {
+      display: block;
+      text-align: center;
+      margin-top: 25px;
+      color: #aaa;
+      text-decoration: none;
+    }
+
+    .back:hover {
+      color: white;
+    }
+
+    footer {
+      text-align: center;
+      color: #666;
+      margin-top: 30px;
+      font-size: 13px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="container">
+
+    <div class="brand">
+      <h1>NEXON</h1>
+      <p>Simple tools. Instant answers.</p>
+    </div>
+
+    <div class="card">
+
+      <h2>Grade & Score Calculator</h2>
+
+      <p class="description">
+        Enter your score and the maximum possible score to calculate your percentage and grade instantly.
+      </p>
+
+      <label for="score">Score obtained</label>
+      <input type="number" id="score" placeholder="Example: 72" min="0">
+
+      <label for="maximum">Maximum score</label>
+      <input type="number" id="maximum" placeholder="Example: 100" min="1">
+
+      <button type="button" onclick="calculateGrade()">Calculate Result</button>
+
+      <button type="button" class="reset" onclick="resetCalculator()">Reset</button>
+
+      <div class="result" id="result">
+        <p><strong>Total:</strong> <span id="total"></span></p>
+        <p><strong>Percentage:</strong> <span id="percentage"></span>%</p>
+        <p><strong>Grade:</strong></p>
+        <div class="grade" id="grade"></div>
+      </div>
+
+    </div>
+
+    <a class="back" href="index.html">← Back to NEXON</a>
+
+    <footer>
+      © 2026 NEXON. Simple tools. Instant answers.
+    </footer>
+
+  </div>
+
+  <script>
+    function calculateGrade() {
+      const score = Number(document.getElementById("score").value);
+      const maximum = Number(document.getElementById("maximum").value);
+
+      if (!Number.isFinite(score) || !Number.isFinite(maximum) || maximum <= 0) {
+        alert("Please enter a valid score and maximum score.");
+        return;
+      }
+
+      if (score < 0 || score > maximum) {
+        alert("Score obtained cannot be less than 0 or greater than the maximum score.");
+        return;
+      }
+
+      const percentage = (score / maximum) * 100;
+
+      let grade;
+
+      if (percentage >= 75) {
+        grade = "A";
+      } else if (percentage >= 65) {
+        grade = "B";
+      } else if (percentage >= 55) {
+        grade = "C";
+      } else if (percentage >= 45) {
+        grade = "D";
+      } else if (percentage >= 40) {
+        grade = "E";
+      } else {
+        grade = "F";
+      }
+
+      document.getElementById("total").textContent =
+        score + " / " + maximum;
+
+      document.getElementById("percentage").textContent =
+        percentage.toFixed(2);
+
+      document.getElementById("grade").textContent =
+        grade;
+
+      document.getElementById("result").style.display = "block";
+    }
+
+    function resetCalculator() {
+      document.getElementById("score").value = "";
+      document.getElementById("maximum").value = "";
+      document.getElementById("result").style.display = "none";
+    }
+  </script>
+
+</body>
+</html>
